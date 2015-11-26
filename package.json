@@ -1,6 +1,6 @@
 {
   "name": "alt-passaporte-email-existe",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "dist/alt-passaporte-email-existe.min.js",
   "scripts": {
     "test": "gulp coverage"

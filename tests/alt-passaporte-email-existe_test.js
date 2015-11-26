@@ -194,7 +194,7 @@ describe('my awesome app', function() {
         expect(AltPassaporteEmailExisteService.sincronizar).not.toHaveBeenCalled();
       })
 
-      it('deve verificar se o email existe - servidor retorna ok - 200 - deve chamar o sincronizar', function() {
+      it('deve verificar se o email existe - servidor retorna ok - 200 - não deve chamar o sincronizar', function() {
         var _email = 'a@b.com';
         var _objChamada = {email: _email, conta: 0};
         var _respostaEmailExiste = {
@@ -220,7 +220,7 @@ describe('my awesome app', function() {
 
         _httpBackend.flush();
 
-        expect(AltPassaporteEmailExisteService.sincronizar).toHaveBeenCalledWith(_email);
+        expect(AltPassaporteEmailExisteService.sincronizar).not.toHaveBeenCalled();
       })
     });
   })

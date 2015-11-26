@@ -14,8 +14,6 @@
           };
 
           AltPassaporteEmailExisteService.prototype.emailExiste = function(email, comSincronizacao) {
-              var _innerThis = this;
-
               var CHAVE_XPPT = 'x-ppt';
               var VALOR_XPPT = self.xppt;
               var _url = self.URL_BASE_PASSAPORTE + '/passaporte-rest-api/rest/publico/usuarios/emailExiste';
@@ -37,12 +35,6 @@
 
               return $http.post(_url, _obj, _config)
                           .then(function(r) {
-                            dump(r.data)
-
-                            if (comSincronizacao && r && r.data && r.data.deveSincronizar) {
-                              return _innerThis.sincronizar(email);
-                            }
-
                             return r;
                           });
           };
