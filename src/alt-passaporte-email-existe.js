@@ -39,7 +39,7 @@
                           });
           };
 
-          AltPassaporteEmailExisteService.prototype.sincronizar = function(email) {
+          AltPassaporteEmailExisteService.prototype.sincronizar = function(email, queryParams) {
               var CHAVE_XPPT = 'x-ppt';
               var VALOR_XPPT = self.xppt;
               var _url = self.URL_BASE_PASSAPORTE + '/passaporte-rest-api/rest/publico/usuarios/email/sincronizar';
@@ -55,6 +55,14 @@
 
               if (ng.isUndefined(email)) {
                 return $q.reject(new TypeError('Email não informado para sincronização.'));
+              }
+
+              if (angular.isObject(queryParams)) {
+                for (var prop in queryParams) {
+                  _url += '&'+prop+'='+queryParams[prop];
+                }
+
+                _url = _url.replace(/&/, '?');
               }
 
               return $http.post(_url, _obj, _config)

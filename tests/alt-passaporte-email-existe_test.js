@@ -243,7 +243,7 @@ describe('my awesome app', function() {
       _rootScope.$digest();
     });
 
-    it('deve verificar se o email existe - servidor retorna erro - 400', function() {
+    it('deve tentar sincronizar - servidor retorna erro - 400', function() {
       var _email = 'a@b.com';
 
       _httpBackend.expectPOST(URL_SINCRONIZAR).respond(400, {});
@@ -260,7 +260,7 @@ describe('my awesome app', function() {
       _httpBackend.flush();
     })
 
-    it('deve verificar se o email existe - servidor retorna erro - 400', function() {
+    it('deve tentar sincronizar - servidor retorna erro - 400', function() {
       var _email = 'a@b.com';
       var _objChamada = {email: _email, conta: 0};
 
@@ -280,7 +280,7 @@ describe('my awesome app', function() {
       _httpBackend.flush();
     })
 
-    it('deve verificar se o email existe - servidor retorna ok - 200', function() {
+    it('deve sincronizar corretamente - servidor retorna ok - 200', function() {
       var _email = 'a@b.com';
       var _objChamada = {email: _email, conta: 0};
 
@@ -290,6 +290,90 @@ describe('my awesome app', function() {
 
       AltPassaporteEmailExisteService
       .sincronizar(_email)
+      .then(function() {
+        expect(true).toBe(true);
+      })
+      .catch(function(erro) {
+        expect(true).toBe(false);
+      });
+
+      _httpBackend.flush();
+    })
+
+    it('deve sincronizar corretamente, parâmetro de query string é um objeto vazio - servidor retorna ok - 200', function() {
+      var _email = 'a@b.com';
+      var _objChamada = {email: _email, conta: 0};
+      var _queryString = {};
+
+      _httpBackend.expectPOST(URL_SINCRONIZAR, _objChamada, function(headers) {
+        return headers['x-ppt'] === XPPT;
+      }).respond(200);
+
+      AltPassaporteEmailExisteService
+      .sincronizar(_email, _queryString)
+      .then(function() {
+        expect(true).toBe(true);
+      })
+      .catch(function(erro) {
+        expect(true).toBe(false);
+      });
+
+      _httpBackend.flush();
+    })
+
+    it('deve sincronizar corretamente, parâmetro de query string tem continue - servidor retorna ok - 200', function() {
+      var _email = 'a@b.com';
+      var _objChamada = {email: _email, conta: 0};
+      var _queryString = {continue: 'http://123.com'};
+
+      _httpBackend.expectPOST(URL_SINCRONIZAR + "?continue="+_queryString.continue, _objChamada, function(headers) {
+        return headers['x-ppt'] === XPPT;
+      }).respond(200);
+
+      AltPassaporteEmailExisteService
+      .sincronizar(_email, _queryString)
+      .then(function() {
+        expect(true).toBe(true);
+      })
+      .catch(function(erro) {
+        expect(true).toBe(false);
+      });
+
+      _httpBackend.flush();
+    })
+
+    it('deve sincronizar corretamente, parâmetro de query string tem continue e idProduto - servidor retorna ok - 200', function() {
+      var _email = 'a@b.com';
+      var _objChamada = {email: _email, conta: 0};
+      var _queryString = {continue: 'http://123.com', idProduto: 123};
+
+      _httpBackend.expectPOST(URL_SINCRONIZAR + "?continue="+_queryString.continue+"&idProduto="+_queryString.idProduto, _objChamada, function(headers) {
+        return headers['x-ppt'] === XPPT;
+      }).respond(200);
+
+      AltPassaporteEmailExisteService
+      .sincronizar(_email, _queryString)
+      .then(function() {
+        expect(true).toBe(true);
+      })
+      .catch(function(erro) {
+        expect(true).toBe(false);
+      });
+
+      _httpBackend.flush();
+    })
+
+    it('deve sincronizar corretamente, parâmetro de query string tem informações aleatórias - servidor retorna ok - 200', function() {
+      var _email = 'a@b.com';
+      var _objChamada = {email: _email, conta: 0};
+      var _queryString = {a: 1, b: true, xyz: 999};
+
+      _httpBackend.expectPOST(URL_SINCRONIZAR + "?a=1&b=true&xyz=999", _objChamada, function(headers) {
+        return headers['x-ppt'] === XPPT;
+      }).respond(200);
+
+      AltPassaporteEmailExisteService
+      .sincronizar(_email, _queryString)
       .then(function() {
         expect(true).toBe(true);
       })

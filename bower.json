@@ -1,7 +1,7 @@
 {
   "name": "alt-passaporte-email-existe",
   "main": "dist/alt-passaporte-email-existe.min.js",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "homepage": "https://github.com/dsn-nimbus/alt-passaporte-email-existe.git",
   "authors": ["dsn-nimbus <ericdantas0@gmail.com>"],
   "description": "desc",
